@@ -8,12 +8,19 @@
   "name": "doctor-service-server",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"nodemon index.js"
+    "start": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Porgramming-Hero-web-course/b6a11-service-review-server-side-dipu528447.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Porgramming-Hero-web-course/b6a11-service-review-server-side-dipu528447/issues"
+  },
+  "homepage": "https://github.com/Porgramming-Hero-web-course/b6a11-service-review-server-side-dipu528447#readme",
   "description": ""
 }
