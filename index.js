@@ -48,6 +48,13 @@ async function run(){
       const result = await db.insertOne(newService);
       res.send(result);
     });
+    app.get('/myreviews/:email', async (req,res)=>{
+      const query={email:req.params.email};
+      const cursor=reviews.find(query);
+      const result=await cursor.toArray();
+      console.log(result);
+      res.send(result)
+    })
   }
   catch(err){
     
