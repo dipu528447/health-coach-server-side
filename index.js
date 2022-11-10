@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const cors=require('cors');
 const port = process.env.PORT||5000;
 require("dotenv").config();
@@ -12,6 +12,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run(){
   try{
     const db=client.db('service').collection('service');
+    const reviews=client.db('service').collection('reviews')
     app.get('/', async (req,res)=>{
       const query={};
       const cursor=db.find(query);
@@ -26,16 +27,32 @@ async function run(){
     })
     app.get('/services/:id',async(req,res)=>{
       const {id}=req.params;
-      console.log(id);
-      const query={service_id:id};
-      const service=await db.findOne(query)
-      
-      res.send(service)
+      const query={_id:ObjectId(id)};
+      const query_comment={service_id:id}
+      const services=await db.findOne(query);
+      const cursor= reviews.find(query_comment)
+      const comments=await cursor.toArray();
+      res.send({services,comments})
     })
+    app.post('/review', async (req, res) => {
+      
+      const myreview = req.body;
+      console.log(myreview)
+      const result = await reviews.insertOne(myreview);
+      res.send(result);
+    });
+    app.post('/addService', async (req, res) => {
+      
+      const newService = req.body;
+      console.log(newService)
+      const result = await db.insertOne(newService);
+      res.send(result);
+    });
   }
   catch(err){
     
   }
+  
 }
 run().catch(err=> console.log(err))
 
